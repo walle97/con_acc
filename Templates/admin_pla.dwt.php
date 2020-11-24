@@ -44,10 +44,10 @@
 							<a class="nav-link" href="../admin/reg_ent_sal.php"
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 								Control acceso</a>
-							<a class="nav-link" href="index.html"
+							<a class="nav-link" href="../admin/registros.php"
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 								Registros</a>
-							<a class="nav-link" href="index.html"
+							<a class="nav-link" href=""
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 								Reportes</a>
 							<a class="nav-link" href="../admin/alu_list.php"

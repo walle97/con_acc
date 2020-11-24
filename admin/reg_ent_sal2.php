@@ -8,10 +8,11 @@
 	}
 	
 	$nombre = $_SESSION['nombre'];
+
 	$tipo_usuario = $_SESSION['tipo_usuario'];
 	
 	$num_ctrl = $_GET['num_ctrl'];
-			
+	date_default_timezone_set("America/Mexico_City");		
 
 			$sql = "SELECT * FROM alumnos WHERE num_ctrl='$num_ctrl'";
 			//echo $sql;
@@ -19,25 +20,28 @@
 			$num = $resultado1->num_rows;
 
 			if($num>0){
-				
-						$sql = "SELECT * FROM reg_ent_sal WHERE num_ctrl='$num_ctrl'";			
+						$fechaact =  date("Y-m-d");
+						$sql = "select id,num_ctrl,nombre,carrera,TIME_FORMAT(fecha_reg,'%r') as Hora from reg_ent_sal  where datediff(fecha_reg, '$fechaact') = 0 and fecha_sal IS NULL and num_ctrl='$num_ctrl'";			
 						$resultado2 = $mysqli->query($sql);		
-						$num2 = $resultado1->num_rows;
+						$num2 = $resultado2->num_rows;
 						if($num2>0){
 								//actualiza
-								while($row = $resultado2->fetch_assoc()) { 
-									$id1 = $row['id'];
-									$num_ctrl1 =  $row['num_ctrl'];
-									$nombre11  =  $row['nombre'];
-									$carrera1  =  $row['carrera'];
-									$fecha_reg1 =  $row['fecha_reg'];
-									$fecha_sal1 =  DateTime();
+								while($row3 = $resultado2->fetch_assoc()) { 
+									$id1 = $row3['id'];
+									$num_ctrl1 =  $row3['num_ctrl'];
+									$nombre1  =  $row3['nombre'];
+									$carrera1  =  $row3['carrera'];
+									$hora_ent1 =  $row3['Hora'];									
+									$hora_sal1 =  date("h:i:s A");
+									$fecha_sal1 =  date("Y-m-d H:i:s ");
 								}
 
 								$sql= "UPDATE reg_ent_sal SET fecha_sal='$fecha_sal1' WHERE id='$id1'";
 
 								if (mysqli_query($mysqli, $sql)){
-									$sucess = "Insert has been successfully.!"; 
+									$sucess = "Insert has been successfully.!";
+									
+									header("refresh:5;url=http://localhost/con_acc/admin/reg_ent_sal.php");
 								}
 								else{								
 							 		echo "Error: " . $sql . "
@@ -45,30 +49,40 @@
 							 	}
 						}else{
 							//inserta
-								while($row = $resultado1->fetch_assoc()) { 
+								while($row2 = $resultado1->fetch_assoc()) { 
 									//$id1 = $row['id'];
-									//$num_ctrl1 =  $row['num_ctrl'];
-									$nombre11  =  $row['nombre'];
-									//$carrera1  =  $row['carrera'];
-									//$fecha_reg1 =  DateTime();
-									//$fecha_sal1 =  "null";
+									
+									$num_ctrl1 =  $row2['num_ctrl'];
+									$nombre1  =  $row2['nombre'];
+									$carrera1  =  $row2['carrera'];
+									$hora_ent1 =  date("h:i:s A");
+									$fecha_reg1 =  date("Y-m-d H:i:s ");
+									$hora_sal1 =  "";
 								}
-
-								/*$sql        = "INSERT INTO alumnos(num_ctrl,nombre,carrera,num_tel,email)
-								VALUES ('$num_ctrl','$nombre1','$carrera','$num_tel','$email')";
+									
+								$sql        = "INSERT INTO reg_ent_sal(num_ctrl,nombre,carrera,fecha_reg,nom_usa)
+								VALUES ('$num_ctrl1','$nombre1','$carrera1','$fecha_reg1','$nombre')";
 
 								if (mysqli_query($mysqli, $sql)){
-									$sucess = "Insert has been successfully.!"; 
+									$sucess = "Insert has been successfully.!";
+									
+									header("refresh:5;url=http://localhost/con_acc/admin/reg_ent_sal.php");
 								}
 								else{								
 							 		echo "Error: " . $sql . "
 									" . mysqli_error($mysqli);
-							 	}*/
+							 	}
 						}				 							
 
 
 				} else {
-						//noexistealumno
+						$num_ctrl1 =  $num_ctrl;
+						$nombre1  =  "Este alumno no esta registrado";
+						$carrera1  =  "";
+						$hora_ent1 =  "";
+						$fecha_reg1 =  "";
+						$hora_sal1 =  "";
+						header("refresh:5;url=http://localhost/con_acc/admin/reg_ent_sal.php");
 				}	
 
 
@@ -108,10 +122,10 @@
 							<a class="nav-link" href="reg_ent_sal.php"
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 								Control acceso</a>
-							<a class="nav-link" href="index.html"
+							<a class="nav-link" href="registros.php"
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 								Registros</a>
-							<a class="nav-link" href="index.html"
+							<a class="nav-link" href=""
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 								Reportes</a>
 							<a class="nav-link" href="alu_list.php"
@@ -133,7 +147,7 @@
 								<div class="form-group row">
 									<label for="description" class="control-label col-sm-3">Numero de control:</label>
 									<div class="col-sm-9">
-									<input type="text" class="form-control" id="num_ctrl" name="num_ctrl" placeholder="intoducir numero de control" value="<?php echo $num_ctrl ?>" required >
+									<input type="text" class="form-control" id="num_ctrl" name="num_ctrl" value="<?php echo $num_ctrl ?>" required >
 									</div>
 								</div>
 
@@ -141,7 +155,7 @@
 								  <div class="form-group row">
 									<label for="description" class="control-label col-sm-3">Nombre del alumno:</label>
 									<div class="col-sm-9">
-									<input type="text" class="form-control" id="nombre" name="nombre" placeholder="introducir nombre del alumno" disabled value="<?php echo $nombre1 ?>">
+									<input type="text" class="form-control" id="nombre" name="nombre"  disabled value="<?php echo $nombre1 ?>">
 									</div>
 								</div>
 
@@ -149,21 +163,22 @@
 								<div class="form-group row">
 									<label for="description" class="control-label col-sm-3">Carrera:</label>
 									<div class="col-sm-9">
-									<input type="text" class="form-control" id="carerra" name="carerra" placeholder="introducir carrera" disabled>
+									<input type="text" class="form-control" id="carerra" name="carerra"  disabled									   value="<?php echo $carrera1 ?>">
 									</div>
 								</div>
 							
 								  <div class="form-group row">
-										<label for="description" class="control-label col-sm-3">Numero de telefono:</label>
+										<label for="description" class="control-label col-sm-3">Hora de entrada</label>
 										<div class="col-sm-9">
-										<input type="text" class="form-control" id="num_tel" name="num_tel" placeholder="introducir numero de telefono" disabled>
+										<input type="text" class="form-control" id="num_tel" name="num_tel"  disabled value="<?php echo $hora_ent1  ?>">
 										</div>
 									</div>
 								  
 								  <div class="form-group row">
-									<label for="description" class="control-label col-sm-3">E-mail:</label>
+									<label for="description" class="control-label col-sm-3">Hora de salida</label>
 									<div class="col-sm-9">
-									<input type="email" class="form-control" id="email" name="email" placeholder="introducir e-mail" disabled >
+									<input type="email" class="form-control" id="email" name="email"  disabled 
+										   value="<?php echo $hora_sal1 ?>">
 									</div>
 								</div>
 

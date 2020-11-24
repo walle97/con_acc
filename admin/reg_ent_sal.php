@@ -12,24 +12,7 @@
 	
 ?>
 <!DOCTYPE html>
-<html >
-	<script>
-			$( function() { // once the document is ready, do things
-				// initialize our loader overlay
-				loader.initialize();
-
-				/*$( '#num_ctrl' ).on( 'click', function() { // onclick for our login button
-					processLogin();
-				} );*/
-
-				$( '.num_ctrl' ).keyup( function( e ) {
-					if ( e.keyCode == 13 ) { // our enter key
-						processLogin();
-					}
-				} );
-			} );
-	</script>
-	<!-- InstanceBegin template="/Templates/admin_pla.dwt.php" codeOutsideHTMLIsLocked="false" -->
+<html ><!-- InstanceBegin template="/Templates/admin_pla.dwt.php" codeOutsideHTMLIsLocked="false" -->
     <head>
         <meta charset="UTF-8" />        
         <title>Control de acceso</title>
@@ -61,10 +44,10 @@
 							<a class="nav-link" href="reg_ent_sal.php"
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 								Control acceso</a>
-							<a class="nav-link" href="index.html"
+							<a class="nav-link" href="registros.php"
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 								Registros</a>
-							<a class="nav-link" href="index.html"
+							<a class="nav-link" href=""
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 								Reportes</a>
 							<a class="nav-link" href="alu_list.php"
@@ -81,7 +64,7 @@
                         <!-- InstanceBeginEditable name="contenidoeditable" -->
 						
 						<h1>Registrar entrada salida</h1>
-						<form class="mt33" action="prueba.php" method = "get">
+						<form class="mt33" action="reg_ent_sal2.php" method = "get">
 
 								
 								<div class="form-group row">
@@ -96,7 +79,7 @@
 								  <div class="form-group row">
 									<label for="description" class="control-label col-sm-3">Nombre del alumno:</label>
 									<div class="col-sm-9">
-									<input type="text" class="form-control" id="nombre" name="nombre" placeholder="introducir nombre del alumno" disabled >
+									<input type="text" class="form-control" id="nombre" name="nombre"  disabled >
 									</div>
 								</div>
 
@@ -104,21 +87,21 @@
 								<div class="form-group row">
 									<label for="description" class="control-label col-sm-3">Carrera:</label>
 									<div class="col-sm-9">
-									<input type="text" class="form-control" id="carerra" name="carerra" placeholder="introducir carrera" disabled>
+									<input type="text" class="form-control" id="carerra" name="carerra"  disabled>
 									</div>
 								</div>
 							
 								  <div class="form-group row">
-										<label for="description" class="control-label col-sm-3">Numero de telefono:</label>
+										<label for="description" class="control-label col-sm-3">Hora de entrada:</label>
 										<div class="col-sm-9">
-										<input type="text" class="form-control" id="num_tel" name="num_tel" placeholder="introducir numero de telefono" disabled>
+										<input type="text" class="form-control" id="num_tel" name="num_tel"  disabled>
 										</div>
 									</div>
 								  
 								  <div class="form-group row">
-									<label for="description" class="control-label col-sm-3">E-mail:</label>
+									<label for="description" class="control-label col-sm-3">Hora de salida:</label>
 									<div class="col-sm-9">
-									<input type="email" class="form-control" id="email" name="email" placeholder="introducir e-mail" disabled >
+									<input type="email" class="form-control" id="email" name="email"  disabled >
 									</div>
 								</div>
 

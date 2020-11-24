@@ -21,21 +21,22 @@
 
 			if($num>0){
 						$fechaact =  date("Y-m-d");
-						$sql = "select * from reg_ent_sal  where datediff(fecha_reg, '$fechaact') = 0 and fecha_sal IS NULL and num_ctrl='$num_ctrl'";			
+						$sql = "select id,num_ctrl,nombre,carrera,TIME_FORMAT(fecha_reg,'%r') as Hora from reg_ent_sal  where datediff(fecha_reg, '$fechaact') = 0 and fecha_sal IS NULL and num_ctrl='$num_ctrl'";			
 						$resultado2 = $mysqli->query($sql);		
 						$num2 = $resultado2->num_rows;
 						if($num2>0){
 								//actualiza
-								while($row = $resultado2->fetch_assoc()) { 
-									$id1 = $row['id'];
-									$num_ctrl1 =  $row['num_ctrl'];
-									$nombre1  =  $row['nombre'];
-									$carrera1  =  $row['carrera'];
-									//$fecha_reg1 =  $row['fecha_reg'];
-									//$fecha_sal1 =  DateTime();
+								while($row3 = $resultado2->fetch_assoc()) { 
+									$id1 = $row3['id'];
+									$num_ctrl1 =  $row3['num_ctrl'];
+									$nombre1  =  $row3['nombre'];
+									$carrera1  =  $row3['carrera'];
+									$hora_ent1 =  $row3['Hora'];									
+									$hora_sal1 =  date("h:m:s");
+									$fecha_sal1 =  date("Y-m-d H:m:s ");
 								}
 
-								/*$sql= "UPDATE reg_ent_sal SET fecha_sal='$fecha_sal1' WHERE id='$id1'";
+								$sql= "UPDATE reg_ent_sal SET fecha_sal='$fecha_sal1' WHERE id='$id1'";
 
 								if (mysqli_query($mysqli, $sql)){
 									$sucess = "Insert has been successfully.!"; 
@@ -43,7 +44,7 @@
 								else{								
 							 		echo "Error: " . $sql . "
 									" . mysqli_error($mysqli);
-							 	}*/
+							 	}
 						}else{
 							//inserta
 								while($row2 = $resultado1->fetch_assoc()) { 
@@ -52,8 +53,8 @@
 									$num_ctrl1 =  $row2['num_ctrl'];
 									$nombre1  =  $row2['nombre'];
 									$carrera1  =  $row2['carrera'];
-									$hora_ent1 =  date("h:m a");
-									$fecha_reg1 =  date("Y-m-d h:m:s ");
+									$hora_ent1 =  date("h:m:s");
+									$fecha_reg1 =  date("Y-m-d H:m:s ");
 									//$fecha_sal1 =  "null";
 								}
 									
@@ -124,7 +125,7 @@
 									<label for="description" class="control-label col-sm-3">Hora de salida</label>
 									<div class="col-sm-9">
 									<input type="email" class="form-control" id="email" name="email"  disabled 
-										   value="<?php echo $nombre1 ?>">
+										   value="<?php echo $hora_sal1 ?>">
 									</div>
 								</div>
 

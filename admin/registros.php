@@ -10,7 +10,7 @@
 	$nombre = $_SESSION['nombre'];
 	$tipo_usuario = $_SESSION['tipo_usuario'];
 	
-	$sql = "select id,num_ctrl,nombre,carrera,fecha_reg,TIME_FORMAT(fecha_reg,'%r') as Hora_ent,TIME_FORMAT(fecha_sal,'%r') as Hora_sal from reg_ent_sal";
+	$sql = "select id,num_ctrl,nombre,carrera,left((fecha_reg),10) as fecha,TIME_FORMAT(fecha_reg,'%r') as Hora_ent,TIME_FORMAT(fecha_sal,'%r') as Hora_sal from reg_ent_sal";
 	$resultado = $mysqli->query($sql);
 	
 	
@@ -30,7 +30,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $nombre; ?><i class="fas fa-user fa-fw"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">Configuración</a>
+                        
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="logout.php">Salir</a>
 					</div>
@@ -89,7 +89,7 @@
 													<td><?php echo $row['num_ctrl']; ?></td>
 													<td><?php echo $row['nombre']; ?></td>
 													<td><?php echo $row['carrera']; ?></td>
-													<td><?php echo $row['fecha_reg']; ?></td>
+													<td><?php echo $row['fecha']; ?></td>
 													<td><?php echo $row['Hora_ent']; ?></td>
 													<td><?php echo $row['Hora_sal']; ?></td>
 													

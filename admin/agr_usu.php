@@ -9,43 +9,52 @@
 	
 	$nombre = $_SESSION['nombre'];
 	$tipo_usuario = $_SESSION['tipo_usuario'];
-	$recordID= $_GET["recordID"];
-
-	$sql = "SELECT * FROM alumnos where id='$recordID'";
-	$ediresu = $mysqli->query($sql);
 	
-
-
-	
-	/*$sql = "select carrera from carreras where carrera not in ('$carrera3')";
-	$resultado = $mysqli->query($sql);*/
-
-	$sql = "SELECT carrera FROM carreras";
-	$resultado = $mysqli->query($sql);
-
 	if(isset($_POST['save'])){
-						$num_ctrl = $_POST['num_ctrl'];
-						$nombre1  = $_POST['nombre'];
-						$carrera  = $_POST['carrera'];
-						$num_tel  = $_POST['num_tel'];
-						$email     = $_POST['email'];
+			
+			
+			$user1 = $_POST['user'];
+			
 
-						$sql= "UPDATE alumnos SET num_ctrl='$num_ctrl',nombre='$nombre1',carrera='$carrera',num_tel='$num_tel',email='$email' WHERE id='$recordID'";
+			$sql = "SELECT * FROM usuarios WHERE usuario='$user1'";
+			//echo $sql;
+			$resultado1 = $mysqli->query($sql);		
+			$num = $resultado1->num_rows;
+
+			if($num>0){
+				
+					/*echo "<script>";
+	  				echo "myFunction();";
+					echo "</script>";*/					 							
+
+
+				} else {
+						$usuario1 = $_POST['user'];
+						$password1  = $_POST['password'];
+						$nombre1 = $_POST['nombre'];
+						$tipo_usuario1  = $_POST['tipo_usuario'];
+						
+
+						$sql        = "INSERT INTO usuarios(usuario,password,nombre,tipo_usuario)
+						VALUES ('$usuario1','$password1','$nombre1','$tipo_usuario1')";
 
 						if (mysqli_query($mysqli, $sql))
 						{
 							$sucess = "Insert has been successfully.!"; 
-							header("Location: alu_list.php");
 						}
 						else
 						{
 					 echo "Error: " . $sql . "
 						" . mysqli_error($mysqli);
 					 }
+				}
+		
+		
+			
 	}
 
-
 ?>
+
 <!DOCTYPE html>
 <html ><!-- InstanceBegin template="/Templates/admin_pla.dwt.php" codeOutsideHTMLIsLocked="false" -->
     <head>
@@ -103,52 +112,38 @@
                 <main>
                     <div class="container-fluid">
                         <!-- InstanceBeginEditable name="contenidoeditable" -->
-						<h1>editar alumno</h1>
-						<?php while($row = $ediresu->fetch_assoc()) { ?>
+						<h1>Agregar Usuario</h1>
 						<form class="mt33" action="" method = "post"><!--form -->
 
 								<!-- First name -->
 								<div class="form-group row">
-									<label for="description" class="control-label col-sm-3">Numero de control:</label>
+									<label for="description" class="control-label col-sm-3">Usuario:</label>
 									<div class="col-sm-9">
-									<input type="text" class="form-control" id="num_ctrl" name="num_ctrl" value="<?php echo $row['num_ctrl']; ?>"
-										   placeholder="intoducir numero de control" required>
+									<input type="text" class="form-control" id="user" name="user" placeholder="intoducir nombre de usuario" required>
 									</div>
 								</div>
 
 								  <!-- last name -->
 								  <div class="form-group row">
-									<label for="description" class="control-label col-sm-3">Nombre del alumno:</label>
+									<label for="description" class="control-label col-sm-3">Contraseña:</label>
 									<div class="col-sm-9">
-									<input type="text" class="form-control" id="nombre" name="nombre" placeholder="introducir nombre del alumno" value="<?php echo $row['nombre']; ?>"required>
+									<input type="text" class="form-control" id="password" name="password" placeholder="introducir Contraseña" required>
 									</div>
 								</div>
 
 								<!-- City name  -->
-								<div class="form-group row">
-									<label for="rootCause" class="control-label col-sm-3">Carrera:</label>
-									<div class="col-sm-9">
-										<select class="custom-select" id="carrera" name="carrera" aria-label="city_name" required>
-											<option value="<?php echo $row['carrera']; ?>"><?php echo $row['carrera']; ?></option>
-											<?php foreach($resultado as $opcion1): ?>
-																				
-													<option value="<?php echo $opcion1['carrera']; ?>"  ><?php echo $opcion1['carrera']; ?></option>
-																									
-											<?php endforeach ?>
-										</select>
-									</div>
-								</div>
+								
 								  <div class="form-group row">
-										<label for="description" class="control-label col-sm-3">Numero de telefono:</label>
+										<label for="description" class="control-label col-sm-3">Nombre:</label>
 										<div class="col-sm-9">
-										<input type="text" class="form-control" id="num_tel" name="num_tel" placeholder="introducir numero de telefono" value="<?php echo $row['num_tel']; ?>" required>
+										<input type="text" class="form-control" id="nombre" name="nombre" placeholder="introducir nombre" required>
 										</div>
 									</div>
 								  <!-- Email -->
 								  <div class="form-group row">
-									<label for="description" class="control-label col-sm-3">E-mail:</label>
+									<label for="description" class="control-label col-sm-3">Tipo de usuario:</label>
 									<div class="col-sm-9">
-									<input type="email" class="form-control" id="email" name="email" placeholder="introducir e-mail" value="<?php echo $row['email']; ?>" required>
+									<input type="text" class="form-control" id="tipo_usuario" name="tipo_usuario" placeholder="introducir tipo de usuario" required>
 									</div>
 								</div>
 
@@ -166,7 +161,8 @@
 									</div>
 								</div>
             			</form>
-						<?php } ?>
+						
+						
 						<!-- InstanceEndEditable -->
 					</div>
 				</main>

@@ -1,4 +1,10 @@
 <?php require_once('../conexion/conexion.php'); ?>
+<script>
+	function myFunction() {
+  		alert("Email o contraseña incorrectos");
+		
+	}
+</script>
 <?php
 	
 	session_start();
@@ -9,45 +15,56 @@
 	
 	$nombre = $_SESSION['nombre'];
 	$tipo_usuario = $_SESSION['tipo_usuario'];
-	$recordID= $_GET["recordID"];
-
-	$sql = "SELECT * FROM alumnos where id='$recordID'";
-	$ediresu = $mysqli->query($sql);
-	
-
-
-	
-	/*$sql = "select carrera from carreras where carrera not in ('$carrera3')";
-	$resultado = $mysqli->query($sql);*/
 
 	$sql = "SELECT carrera FROM carreras";
 	$resultado = $mysqli->query($sql);
-
+	
 	if(isset($_POST['save'])){
+			
+			
+			$num_ctrl = $_POST['num_ctrl'];
+			
+
+			$sql = "SELECT num_ctrl FROM alumnos WHERE num_ctrl='$num_ctrl'";
+			//echo $sql;
+			$resultado1 = $mysqli->query($sql);		
+			$num = $resultado1->num_rows;
+
+			if($num>0){
+				
+					/*echo "<script>";
+	  				echo "myFunction();";
+					echo "</script>";*/					 							
+
+
+				} else {
 						$num_ctrl = $_POST['num_ctrl'];
 						$nombre1  = $_POST['nombre'];
 						$carrera  = $_POST['carrera'];
 						$num_tel  = $_POST['num_tel'];
 						$email     = $_POST['email'];
 
-						$sql= "UPDATE alumnos SET num_ctrl='$num_ctrl',nombre='$nombre1',carrera='$carrera',num_tel='$num_tel',email='$email' WHERE id='$recordID'";
+						$sql        = "INSERT INTO alumnos(num_ctrl,nombre,carrera,num_tel,email)
+						VALUES ('$num_ctrl','$nombre1','$carrera','$num_tel','$email')";
 
 						if (mysqli_query($mysqli, $sql))
 						{
 							$sucess = "Insert has been successfully.!"; 
-							header("Location: alu_list.php");
 						}
 						else
 						{
 					 echo "Error: " . $sql . "
 						" . mysqli_error($mysqli);
 					 }
+				}
+		
+		
+			
 	}
-
 
 ?>
 <!DOCTYPE html>
-<html ><!-- InstanceBegin template="/Templates/admin_pla.dwt.php" codeOutsideHTMLIsLocked="false" -->
+<html ><!-- InstanceBegin template="/Templates/enca_pla.dwt.php" codeOutsideHTMLIsLocked="false" -->
     <head>
         <meta charset="UTF-8" />        
         <title>Control de acceso</title>
@@ -56,19 +73,17 @@
 	</head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <a class="navbar-brand" href="inicio.php">Control de acceso </a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+            <a class="navbar-brand" href="index.html">Control de acceso </a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             <ul class="navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><?php echo $nombre; ?><i class="fas fa-user fa-fw"></i></a>
+                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $nombre; ?><i class="fas fa-user fa-fw"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         
                         
 				</li>
-				
 					<div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="../logout.php">Salir</a>
 					</div>
-					
 			</ul>
 		</nav>
         <div id="layoutSidenav">
@@ -76,24 +91,17 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="inicio.php"
+                            <a class="nav-link" href="inicio_enc.php"
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 								Inicio</a>
-							<a class="nav-link" href="reg_ent_sal.php"
+							<a class="nav-link" href="enc_reg_ent_sal.php"
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 								Control acceso</a>
-							<a class="nav-link" href="registros.php"
+							<a class="nav-link" href="enc_agr_alu.php"
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-								Registros</a>
-							<a class="nav-link" href=""
-							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-								Reportes</a>
-							<a class="nav-link" href="alu_list.php"
-							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-								Alumnos</a>
-							<a class="nav-link" href="usu_list.php"
-							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-								Usuarios</a>	
+								Agregar Alumno</a>
+							
+												
 							
 					</div>
                     
@@ -103,16 +111,14 @@
                 <main>
                     <div class="container-fluid">
                         <!-- InstanceBeginEditable name="contenidoeditable" -->
-						<h1>editar alumno</h1>
-						<?php while($row = $ediresu->fetch_assoc()) { ?>
+						<h1>Agregar alumno</h1>
 						<form class="mt33" action="" method = "post"><!--form -->
 
 								<!-- First name -->
 								<div class="form-group row">
 									<label for="description" class="control-label col-sm-3">Numero de control:</label>
 									<div class="col-sm-9">
-									<input type="text" class="form-control" id="num_ctrl" name="num_ctrl" value="<?php echo $row['num_ctrl']; ?>"
-										   placeholder="intoducir numero de control" required>
+									<input type="text" class="form-control" id="num_ctrl" name="num_ctrl" placeholder="intoducir numero de control" required>
 									</div>
 								</div>
 
@@ -120,7 +126,7 @@
 								  <div class="form-group row">
 									<label for="description" class="control-label col-sm-3">Nombre del alumno:</label>
 									<div class="col-sm-9">
-									<input type="text" class="form-control" id="nombre" name="nombre" placeholder="introducir nombre del alumno" value="<?php echo $row['nombre']; ?>"required>
+									<input type="text" class="form-control" id="nombre" name="nombre" placeholder="introducir nombre del alumno" required>
 									</div>
 								</div>
 
@@ -129,10 +135,10 @@
 									<label for="rootCause" class="control-label col-sm-3">Carrera:</label>
 									<div class="col-sm-9">
 										<select class="custom-select" id="carrera" name="carrera" aria-label="city_name" required>
-											<option value="<?php echo $row['carrera']; ?>"><?php echo $row['carrera']; ?></option>
+											<option value=""> -Selecione una carrera -</option>
 											<?php foreach($resultado as $opcion1): ?>
 																				
-													<option value="<?php echo $opcion1['carrera']; ?>"  ><?php echo $opcion1['carrera']; ?></option>
+													<option value="<?php echo $opcion1['carrera']; ?>"><?php echo $opcion1['carrera']; ?></option>
 																									
 											<?php endforeach ?>
 										</select>
@@ -141,14 +147,14 @@
 								  <div class="form-group row">
 										<label for="description" class="control-label col-sm-3">Numero de telefono:</label>
 										<div class="col-sm-9">
-										<input type="text" class="form-control" id="num_tel" name="num_tel" placeholder="introducir numero de telefono" value="<?php echo $row['num_tel']; ?>" required>
+										<input type="text" class="form-control" id="num_tel" name="num_tel" placeholder="introducir numero de telefono" required>
 										</div>
 									</div>
 								  <!-- Email -->
 								  <div class="form-group row">
 									<label for="description" class="control-label col-sm-3">E-mail:</label>
 									<div class="col-sm-9">
-									<input type="email" class="form-control" id="email" name="email" placeholder="introducir e-mail" value="<?php echo $row['email']; ?>" required>
+									<input type="email" class="form-control" id="email" name="email" placeholder="introducir e-mail" required>
 									</div>
 								</div>
 
@@ -166,7 +172,7 @@
 									</div>
 								</div>
             			</form>
-						<?php } ?>
+						
 						<!-- InstanceEndEditable -->
 					</div>
 				</main>

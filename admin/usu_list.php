@@ -10,11 +10,10 @@
 	$nombre = $_SESSION['nombre'];
 	$tipo_usuario = $_SESSION['tipo_usuario'];
 	
-	$sql = "SELECT * FROM alumnos";
+	$sql = "SELECT * FROM usuarios";
 	$resultado = $mysqli->query($sql);
+	
 ?>
-
-
 <!DOCTYPE html>
 <html ><!-- InstanceBegin template="/Templates/admin_pla.dwt.php" codeOutsideHTMLIsLocked="false" -->
     <head>
@@ -72,9 +71,9 @@
                 <main>
                     <div class="container-fluid">
                         <!-- InstanceBeginEditable name="contenidoeditable" -->
-						<h1>Alumnos</h1>
+						<h1>Usuarios </h1>
 						<div class="offset-sm-10 col-sm-9 pull-right">
-							<button type="button"  onclick="location.href='../admin/agr_alu.php'" class="btn btn-primary">Agregar alumno</button>
+							<button type="button"  onclick="location.href='../admin/agr_usu.php'" class="btn btn-primary">Agregar usuario</button>
 							
 						</div>
 						<br>
@@ -82,12 +81,13 @@
 									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 										<thead>
 											<tr>
-												<th>Numero de control</th>
+												<th>ID usuario</th>
+												<th>usuario</th>
+												<th>Contraseña </th>
 												<th>Nombre</th>
-												<th>Carrera</th>
-												<th>Numero de telefono</th>
-												<th>email</th>
-												<th>accion</th>
+												<th>Tipo usuario</th>
+												<th>Acciones</th>
+												
 											</tr>
 										</thead>
 										
@@ -95,18 +95,17 @@
 											<?php while($row = $resultado->fetch_assoc()) { ?>
 												
 												<tr>
-													<td><?php echo $row['num_ctrl']; ?></td>
+													<td><?php echo $row['id']; ?></td>
+													<td><?php echo $row['usuario']; ?></td>
+													<td><?php echo $row['password']; ?></td>
 													<td><?php echo $row['nombre']; ?></td>
-													<td><?php echo $row['carrera']; ?></td>
-													<td><?php echo $row['num_tel']; ?></td>
-													<td><?php echo $row['email']; ?></td>
+													<td><?php echo $row['tipo_usuario']; ?></td>
 													<td><a href="../admin/edi_alu.php?recordID=<?php echo $row['id']; ?>">Editar</a>-<a href="../admin/edi_alu.php?recordID=<?php echo $row['id']; ?>">eliminar</a></td>
 												</tr>
 											<?php } ?>
 										</tbody>
 									</table>
 								</div>
-						
 						<!-- InstanceEndEditable -->
 					</div>
 				</main>

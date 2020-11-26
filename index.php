@@ -22,12 +22,27 @@
 			
 			if($password_bd == $pass_c){
 				
-				$_SESSION['id'] = $row['id'];
-				$_SESSION['nombre'] = $row['nombre'];
-				$_SESSION['tipo_usuario'] = $row['tipo_usuario'];
-				
-				header("Location: admin/inicio.php");
-				
+				if($row['tipo_usuario']==1 ){
+					$_SESSION['id'] = $row['id'];
+					$_SESSION['nombre'] = $row['nombre'];
+					$_SESSION['tipo_usuario'] = $row['tipo_usuario'];
+
+					header("Location: admin/inicio.php");
+				}else{
+						if($row['tipo_usuario']==2 ){
+						$_SESSION['id'] = $row['id'];
+						$_SESSION['nombre'] = $row['nombre'];
+						$_SESSION['tipo_usuario'] = $row['tipo_usuario'];
+
+						header("Location: docente/inicio_doc.php");
+						}else{
+							$_SESSION['id'] = $row['id'];
+							$_SESSION['nombre'] = $row['nombre'];
+							$_SESSION['tipo_usuario'] = $row['tipo_usuario'];
+							header("Location: encargado/inicio_enc.php");
+						}
+					
+				}
 			} else {
 			
 			echo "La contraseña no coincide";

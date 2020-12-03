@@ -10,7 +10,7 @@
 	$nombre = $_SESSION['nombre'];
 	$tipo_usuario = $_SESSION['tipo_usuario'];
 	
-	$sql = "select id,num_ctrl,nombre,carrera,left((fecha_reg),10) as fecha,TIME_FORMAT(fecha_reg,'%r') as Hora_ent,TIME_FORMAT(fecha_sal,'%r') as Hora_sal from reg_ent_sal";
+	$sql = "select id,num_ctrl,nombre,id_carr,left((fecha_reg),10) as fecha,TIME_FORMAT(fecha_reg,'%r') as Hora_ent,TIME_FORMAT(fecha_sal,'%r') as Hora_sal from reg_ent_sal";
 	$resultado = $mysqli->query($sql);
 	
 	
@@ -85,6 +85,7 @@
 												<th>Fecha registro</th>
 												<th>Hora entrada</th>
 												<th>Hora Salida</th>
+												<th>Accion</th>
 											</tr>
 										</thead>
 										
@@ -94,10 +95,18 @@
 												<tr>
 													<td><?php echo $row['num_ctrl']; ?></td>
 													<td><?php echo $row['nombre']; ?></td>
-													<td><?php echo $row['carrera']; ?></td>
+													<td><?php 
+															$idcarr1 = $row['id_carr'];
+															$sql = "SELECT * FROM carreras where id_carr='$idcarr1'";
+															$rescarr = $mysqli->query($sql);
+															while($row3 = $rescarr->fetch_assoc()) {
+																echo $row3['carrera'];
+															}
+														?></td>
 													<td><?php echo $row['fecha']; ?></td>
 													<td><?php echo $row['Hora_ent']; ?></td>
 													<td><?php echo $row['Hora_sal']; ?></td>
+													<td><a href="../admin/del_reg.php?recordID=<?php echo $row['id']; ?>">eliminar</a></td>
 													
 												</tr>
 											<?php } ?>

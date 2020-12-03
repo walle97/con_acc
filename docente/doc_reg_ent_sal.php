@@ -62,7 +62,63 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <!-- InstanceBeginEditable name="contenidoeditable" -->contenidoeditable<!-- InstanceEndEditable -->
+                        <!-- InstanceBeginEditable name="contenidoeditable" -->
+						<h1>Registrar entrada salida</h1>
+						<form class="mt33" action="doc_reg_ent_sal2.php" method = "get">
+
+								
+								<div class="form-group row">
+									<label for="description" class="control-label col-sm-3">Numero de control:</label>
+									<div class="col-sm-9">
+									<input type="text" class="form-control" id="num_ctrl" name="num_ctrl" placeholder="Intoducir numero de control" required onKeyPress="function()">
+									</div>
+								</div>
+						</form>
+						<form class="mt33" action="" method = "post">
+								 
+								  <div class="form-group row">
+									<label for="description" class="control-label col-sm-3">Nombre del alumno:</label>
+									<div class="col-sm-9">
+									<input type="text" class="form-control" id="nombre" name="nombre"  disabled >
+									</div>
+								</div>
+
+								
+								<div class="form-group row">
+									<label for="description" class="control-label col-sm-3">Carrera:</label>
+									<div class="col-sm-9">
+									<input type="text" class="form-control" id="carerra" name="carerra"  disabled>
+									</div>
+								</div>
+							
+								  <div class="form-group row">
+										<label for="description" class="control-label col-sm-3">Hora de entrada:</label>
+										<div class="col-sm-9">
+										<input type="text" class="form-control" id="num_tel" name="num_tel"  disabled>
+										</div>
+									</div>
+								  
+								  <div class="form-group row">
+									<label for="description" class="control-label col-sm-3">Hora de salida:</label>
+									<div class="col-sm-9">
+									<input type="email" class="form-control" id="email" name="email"  disabled >
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<div class="offset-sm-3 col-sm-9 pull-right invisible">
+										<button type="submit"id="save" name="save" class="btn btn-primary"  >Guardar</button>
+									</div>
+								</div>
+								
+								<div class="text-success text-center d-none" id="msg_div">
+									<h4 id="res_message">Insert has been successfully.</h4>
+									 
+								</div>
+
+            			</form>
+						
+						<!-- InstanceEndEditable -->
 					</div>
 				</main>
                 

@@ -85,7 +85,7 @@
 												<th>Numero de control</th>
 												<th>Nombre</th>
 												<th>Carrera</th>
-												<th>Numero de telefono</th>
+												<th>Número de teléfono</th>
 												<th>email</th>
 												<th>accion</th>
 											</tr>
@@ -97,10 +97,18 @@
 												<tr>
 													<td><?php echo $row['num_ctrl']; ?></td>
 													<td><?php echo $row['nombre']; ?></td>
-													<td><?php echo $row['carrera']; ?></td>
+													<!--<td><?php echo $row['carrera']; ?></td>-->
+													<td><?php 
+															$idcarr1 = $row['id_carr'];
+															$sql = "SELECT * FROM carreras where id_carr='$idcarr1'";
+															$rescarr = $mysqli->query($sql);
+															while($row3 = $rescarr->fetch_assoc()) {
+																echo $row3['carrera'];
+															}							   
+														?></td>
 													<td><?php echo $row['num_tel']; ?></td>
 													<td><?php echo $row['email']; ?></td>
-													<td><a href="../admin/edi_alu.php?recordID=<?php echo $row['id']; ?>">Editar</a>-<a href="../admin/edi_alu.php?recordID=<?php echo $row['id']; ?>">eliminar</a></td>
+													<td><a href="../admin/edi_alu.php?recordID=<?php echo $row['id']; ?>">Editar</a>-<a href="../admin/del_alu.php?recordID=<?php echo $row['id']; ?>">eliminar</a></td>
 												</tr>
 											<?php } ?>
 										</tbody>

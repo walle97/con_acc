@@ -4,57 +4,42 @@
 	session_start();
 	
 	if(!isset($_SESSION['id'])){
-		header("Location: index.php");
+		header("Location: ../index.php");
 	}
 	
 	$nombre = $_SESSION['nombre'];
 	$tipo_usuario = $_SESSION['tipo_usuario'];
+
+	$recordID= $_GET["recordID"];
+
+	$sql = "SELECT * FROM usuarios where id='$recordID'";
+	$ediresu = $mysqli->query($sql);
+
+if(isset($_POST['save'])){
 	
-	if(isset($_POST['save'])){
-			
-			
-			$user1 = $_POST['user'];
-			
-
-			$sql = "SELECT * FROM usuarios WHERE usuario='$user1'";
-			//echo $sql;
-			$resultado1 = $mysqli->query($sql);		
-			$num = $resultado1->num_rows;
-
-			if($num>0){
-				
-					/*echo "<script>";
-	  				echo "myFunction();";
-					echo "</script>";*/					 							
-
-
-				} else {
 						$usuario1 = $_POST['user'];
 						$password1  = $_POST['password'];
 						$nombre1 = $_POST['nombre'];
 						$tipo_usuario1  = $_POST['tipo_usuario'];
 						
 
-						$sql ="INSERT INTO usuarios(usuario,password,nombre,tipo_usuario)
-						VALUES ('$usuario1','$password1','$nombre1','$tipo_usuario1')"; 
+						$sql ="UPDATE usuarios SET usuario='$usuario1',password='$password1',nombre='$nombre1',tipo_usuario='$tipo_usuario1' WHERE id='$recordID'";
 
 						if (mysqli_query($mysqli, $sql))
 						{
 							$sucess = "Insert has been successfully.!"; 
+							header("Location: usu_list.php");
 						}
 						else
 						{
 					 echo "Error: " . $sql . "
 						" . mysqli_error($mysqli);
 					 }
-				}
-		
-		
-			
-	}
+}
 
+	
+	
 ?>
-
 <!DOCTYPE html>
 <html ><!-- InstanceBegin template="/Templates/admin_pla.dwt.php" codeOutsideHTMLIsLocked="false" -->
     <head>
@@ -112,14 +97,17 @@
                 <main>
                     <div class="container-fluid">
                         <!-- InstanceBeginEditable name="contenidoeditable" -->
-						<h1>Agregar Usuario</h1>
+						
+						
+						<h1>Editar Usuario</h1>
+						<?php while($row = $ediresu->fetch_assoc()) { ?>
 						<form class="mt33" action="" method = "post"><!--form -->
 
 								<!-- First name -->
 								<div class="form-group row">
 									<label for="description" class="control-label col-sm-3">Usuario:</label>
 									<div class="col-sm-9">
-									<input type="text" class="form-control" id="user" name="user" placeholder="Intoducir nombre de usuario" required>
+									<input type="text" class="form-control" id="user" name="user" value="<?php echo $row['usuario']; ?>" placeholder="Intoducir nombre de usuario" required>
 									</div>
 								</div>
 
@@ -127,7 +115,7 @@
 								  <div class="form-group row">
 									<label for="description" class="control-label col-sm-3">Contraseña:</label>
 									<div class="col-sm-9">
-									<input type="text" class="form-control" id="password" name="password" placeholder="Introducir Contraseña" required>
+									<input type="text" class="form-control" id="password" name="password" placeholder="Introducir Contraseña" value="<?php echo $row['password']; ?>" required>
 									</div>
 								</div>
 
@@ -136,18 +124,18 @@
 								  <div class="form-group row">
 										<label for="description" class="control-label col-sm-3">Nombre:</label>
 										<div class="col-sm-9">
-										<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Introducir nombre" required>
+										<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Introducir nombre" value="<?php echo $row['nombre']; ?>" required>
 										</div>
 									</div>
-								  
-								<div class="form-group row">
+								  <!-- Email -->
+								  <div class="form-group row">
 									<label for="rootCause" class="control-label col-sm-3">Tipo de usuario:</label>
 									<div class="col-sm-9">
 										<select class="custom-select" id="tipo_usuario" name="tipo_usuario" aria-label="tipo_usuario" required>
 											<option value=""> -Selecione una opcion -</option>
-											<option value="1"> Administrador</option>
-											<option value="2"> Docente</option>
-											<option value="3"> Encargado</option>
+											<option value="1" <?php if (!(strcmp(1, htmlentities($row['tipo_usuario'], ENT_COMPAT, 'iso-8859-1')))) {echo "SELECTED";} ?> > Administrador</option>
+											<option value="2" <?php if (!(strcmp(2, htmlentities($row['tipo_usuario'], ENT_COMPAT, 'iso-8859-1')))) {echo "SELECTED";} ?> > Docente</option>
+											<option value="3" <?php if (!(strcmp(3, htmlentities($row['tipo_usuario'], ENT_COMPAT, 'iso-8859-1')))) {echo "SELECTED";} ?> > Encargado</option>
 											
 										</select>
 									</div>
@@ -167,6 +155,8 @@
 									</div>
 								</div>
             			</form>
+						<?php } ?>
+						
 						
 						
 						<!-- InstanceEndEditable -->

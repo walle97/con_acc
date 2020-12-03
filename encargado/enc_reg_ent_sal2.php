@@ -21,7 +21,7 @@
 
 			if($num>0){
 						$fechaact =  date("Y-m-d");
-						$sql = "select id,num_ctrl,nombre,carrera,TIME_FORMAT(fecha_reg,'%r') as Hora from reg_ent_sal  where datediff(fecha_reg, '$fechaact') = 0 and fecha_sal IS NULL and num_ctrl='$num_ctrl'";			
+						$sql = "select id,num_ctrl,nombre,id_carr,TIME_FORMAT(fecha_reg,'%r') as Hora from reg_ent_sal  where datediff(fecha_reg, '$fechaact') = 0 and fecha_sal IS NULL and num_ctrl='$num_ctrl'";			
 						$resultado2 = $mysqli->query($sql);		
 						$num2 = $resultado2->num_rows;
 						if($num2>0){
@@ -29,8 +29,13 @@
 								while($row3 = $resultado2->fetch_assoc()) { 
 									$id1 = $row3['id'];
 									$num_ctrl1 =  $row3['num_ctrl'];
-									$nombre1  =  $row3['nombre'];
-									$carrera1  =  $row3['carrera'];
+									$nombre1  =  $row3['nombre'];									  
+									$idcarr1 = $row3['id_carr'];
+									$sql = "SELECT * FROM carreras where id_carr='$idcarr1'";
+									$rescarr = $mysqli->query($sql);
+									while($row4 = $rescarr->fetch_assoc()) {
+												$carrera1  = $row4['carrera'];
+									}
 									$hora_ent1 =  $row3['Hora'];									
 									$hora_sal1 =  date("h:i:s A");
 									$fecha_sal1 =  date("Y-m-d H:i:s ");
@@ -54,14 +59,19 @@
 									
 									$num_ctrl1 =  $row2['num_ctrl'];
 									$nombre1  =  $row2['nombre'];
-									$carrera1  =  $row2['carrera'];
+									$idcarr1 = $row2['id_carr'];
+									$sql = "SELECT * FROM carreras where id_carr='$idcarr1'";
+									$rescarr = $mysqli->query($sql);
+									while($row4 = $rescarr->fetch_assoc()) {
+												$carrera1  = $row4['carrera'];
+									}
 									$hora_ent1 =  date("h:i:s A");
 									$fecha_reg1 =  date("Y-m-d H:i:s ");
 									$hora_sal1 =  "";
 								}
 									
-								$sql        = "INSERT INTO reg_ent_sal(num_ctrl,nombre,carrera,fecha_reg,nom_usa)
-								VALUES ('$num_ctrl1','$nombre1','$carrera1','$fecha_reg1','$nombre')";
+								$sql        = "INSERT INTO reg_ent_sal(num_ctrl,nombre,id_carr,fecha_reg,nom_usa)
+								VALUES ('$num_ctrl1','$nombre1','$idcarr1','$fecha_reg1','$nombre')";
 
 								if (mysqli_query($mysqli, $sql)){
 									$sucess = "Insert has been successfully.!";

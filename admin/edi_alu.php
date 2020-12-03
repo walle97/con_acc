@@ -20,7 +20,7 @@
 	/*$sql = "select carrera from carreras where carrera not in ('$carrera3')";
 	$resultado = $mysqli->query($sql);*/
 
-	$sql = "SELECT carrera FROM carreras";
+	$sql = "SELECT * FROM carreras";
 	$resultado = $mysqli->query($sql);
 
 	if(isset($_POST['save'])){
@@ -30,7 +30,7 @@
 						$num_tel  = $_POST['num_tel'];
 						$email     = $_POST['email'];
 
-						$sql= "UPDATE alumnos SET num_ctrl='$num_ctrl',nombre='$nombre1',carrera='$carrera',num_tel='$num_tel',email='$email' WHERE id='$recordID'";
+						$sql= "UPDATE alumnos SET num_ctrl='$num_ctrl',nombre='$nombre1',id_carr='$carrera',num_tel='$num_tel',email='$email' WHERE id='$recordID'";
 
 						if (mysqli_query($mysqli, $sql))
 						{
@@ -103,7 +103,7 @@
                 <main>
                     <div class="container-fluid">
                         <!-- InstanceBeginEditable name="contenidoeditable" -->
-						<h1>editar alumno</h1>
+						<h1>Editar alumno</h1>
 						<?php while($row = $ediresu->fetch_assoc()) { ?>
 						<form class="mt33" action="" method = "post"><!--form -->
 
@@ -112,7 +112,7 @@
 									<label for="description" class="control-label col-sm-3">Numero de control:</label>
 									<div class="col-sm-9">
 									<input type="text" class="form-control" id="num_ctrl" name="num_ctrl" value="<?php echo $row['num_ctrl']; ?>"
-										   placeholder="intoducir numero de control" required>
+										   placeholder="Intoducir numero de control" required>
 									</div>
 								</div>
 
@@ -120,7 +120,7 @@
 								  <div class="form-group row">
 									<label for="description" class="control-label col-sm-3">Nombre del alumno:</label>
 									<div class="col-sm-9">
-									<input type="text" class="form-control" id="nombre" name="nombre" placeholder="introducir nombre del alumno" value="<?php echo $row['nombre']; ?>"required>
+									<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Introducir nombre del alumno" value="<?php echo $row['nombre']; ?>"required>
 									</div>
 								</div>
 
@@ -129,26 +129,26 @@
 									<label for="rootCause" class="control-label col-sm-3">Carrera:</label>
 									<div class="col-sm-9">
 										<select class="custom-select" id="carrera" name="carrera" aria-label="city_name" required>
-											<option value="<?php echo $row['carrera']; ?>"><?php echo $row['carrera']; ?></option>
+											<option value="">-Selcecione Carrera-</option>
 											<?php foreach($resultado as $opcion1): ?>
 																				
-													<option value="<?php echo $opcion1['carrera']; ?>"  ><?php echo $opcion1['carrera']; ?></option>
+													<option value="<?php echo $opcion1['id_carr']; ?>" <?php if (!(strcmp($row['id_carr'], htmlentities( $opcion1['id_carr'], ENT_COMPAT, 'iso-8859-1')))) {echo "SELECTED";} ?> ><?php echo $opcion1['carrera']; ?></option>
 																									
 											<?php endforeach ?>
 										</select>
 									</div>
 								</div>
 								  <div class="form-group row">
-										<label for="description" class="control-label col-sm-3">Numero de telefono:</label>
+										<label for="description" class="control-label col-sm-3">Número de teléfono:</label>
 										<div class="col-sm-9">
-										<input type="text" class="form-control" id="num_tel" name="num_tel" placeholder="introducir numero de telefono" value="<?php echo $row['num_tel']; ?>" required>
+										<input type="text" class="form-control" id="num_tel" name="num_tel" placeholder="Introducir número de teléfono" value="<?php echo $row['num_tel']; ?>" required>
 										</div>
 									</div>
 								  <!-- Email -->
 								  <div class="form-group row">
 									<label for="description" class="control-label col-sm-3">E-mail:</label>
 									<div class="col-sm-9">
-									<input type="email" class="form-control" id="email" name="email" placeholder="introducir e-mail" value="<?php echo $row['email']; ?>" required>
+									<input type="email" class="form-control" id="email" name="email" placeholder="Introducir e-mail" value="<?php echo $row['email']; ?>" required>
 									</div>
 								</div>
 

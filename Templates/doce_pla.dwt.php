@@ -39,24 +39,24 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="../admin/inicio.php"
+                            <a class="nav-link" href="../docente/inicio_doc.php"
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 								Inicio</a>
-							<a class="nav-link" href="../admin/reg_ent_sal.php"
+							<a class="nav-link" href="../docente/doc_reg_ent_sal.php"
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 								Control acceso</a>
-							<a class="nav-link" href="../admin/registros.php"
+							<a class="nav-link" href="../docente/doc_registros.php"
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 								Registros</a>
 							<a class="nav-link" href=""
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 								Reportes</a>
-							<a class="nav-link" href="../admin/alu_list.php"
+							<a class="nav-link" href="../docente/doc_alu_list.php"
 							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 								Alumnos</a>						
 							
 					</div>
-                    
+                     
 				</nav>
 			</div>
             <div id="layoutSidenav_content">

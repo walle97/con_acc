@@ -16,7 +16,7 @@
 	$nombre = $_SESSION['nombre'];
 	$tipo_usuario = $_SESSION['tipo_usuario'];
 
-	$sql = "SELECT carrera FROM carreras";
+	$sql = "SELECT * FROM carreras";
 	$resultado = $mysqli->query($sql);
 	
 	if(isset($_POST['save'])){
@@ -44,7 +44,7 @@
 						$num_tel  = $_POST['num_tel'];
 						$email     = $_POST['email'];
 
-						$sql        = "INSERT INTO alumnos(num_ctrl,nombre,carrera,num_tel,email)
+						$sql        = "INSERT INTO alumnos(num_ctrl,nombre,id_carr,num_tel,email)
 						VALUES ('$num_ctrl','$nombre1','$carrera','$num_tel','$email')";
 
 						if (mysqli_query($mysqli, $sql))
@@ -118,7 +118,7 @@
 								<div class="form-group row">
 									<label for="description" class="control-label col-sm-3">Numero de control:</label>
 									<div class="col-sm-9">
-									<input type="text" class="form-control" id="num_ctrl" name="num_ctrl" placeholder="intoducir numero de control" required>
+									<input type="text" class="form-control" id="num_ctrl" name="num_ctrl" placeholder="Intoducir numero de control" required>
 									</div>
 								</div>
 
@@ -126,7 +126,7 @@
 								  <div class="form-group row">
 									<label for="description" class="control-label col-sm-3">Nombre del alumno:</label>
 									<div class="col-sm-9">
-									<input type="text" class="form-control" id="nombre" name="nombre" placeholder="introducir nombre del alumno" required>
+									<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Introducir nombre del alumno" required>
 									</div>
 								</div>
 
@@ -138,23 +138,23 @@
 											<option value=""> -Selecione una carrera -</option>
 											<?php foreach($resultado as $opcion1): ?>
 																				
-													<option value="<?php echo $opcion1['carrera']; ?>"><?php echo $opcion1['carrera']; ?></option>
+													<option value="<?php echo $opcion1['id_carr']; ?>"><?php echo $opcion1['carrera']; ?></option>
 																									
 											<?php endforeach ?>
 										</select>
 									</div>
 								</div>
 								  <div class="form-group row">
-										<label for="description" class="control-label col-sm-3">Numero de telefono:</label>
+										<label for="description" class="control-label col-sm-3">Número de teléfono:</label>
 										<div class="col-sm-9">
-										<input type="text" class="form-control" id="num_tel" name="num_tel" placeholder="introducir numero de telefono" required>
+										<input type="text" class="form-control" id="num_tel" name="num_tel" placeholder="Introducir número de teléfono" required>
 										</div>
 									</div>
 								  <!-- Email -->
 								  <div class="form-group row">
 									<label for="description" class="control-label col-sm-3">E-mail:</label>
 									<div class="col-sm-9">
-									<input type="email" class="form-control" id="email" name="email" placeholder="introducir e-mail" required>
+									<input type="email" class="form-control" id="email" name="email" placeholder="Introducir e-mail" required>
 									</div>
 								</div>
 
@@ -172,7 +172,6 @@
 									</div>
 								</div>
             			</form>
-						
 						<!-- InstanceEndEditable -->
 					</div>
 				</main>
